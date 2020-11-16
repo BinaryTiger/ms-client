@@ -94,7 +94,7 @@ jobs:
 
     - name: Install glfw
       run: |
-        cd thirdparty/glfw
+        cd thirdparty
         git clone https://github.com/glfw/glfw
         cd glfw
         cmake -Bbuild -GNinja -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} -DCMAKE_INSTALL_PREFIX="$env:INSTALL_LOCATION" -DCMAKE_BUILD_TYPE="$env:BUILD_TYPE"

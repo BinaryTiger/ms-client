@@ -22,6 +22,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
       
     - name: Cache dependencies
       uses: actions/cache@v2
@@ -35,16 +37,13 @@ jobs:
         
     - name: Install Bass
       run: |
-        mkdir thirdparty
         cd thirdparty
         git clone https://github.com/filoper/bass24.git
         cp -R bass24/bass24-osx .
 
     - name: Install Glad
       run: |
-        cd thirdparty
-        git clone https://github.com/Dav1dde/glad.git
-        cd glad
+        cd thirdparty/glad
         cmake -Bbuild -GNinja -DCMAKE_INSTALL_PREFIX=$INSTALL_LOCATION -DCMAKE_BUILD_TYPE=$BUILD_TYPE
         cmake --build build --config $BUILD_TYPE
         cmake --install build --config $BUILD_TYPE
@@ -54,27 +53,13 @@ jobs:
 
     - name: Install Nx library
       run: |
-        cd thirdparty
-        mkdir NoLifeNx
-        cd NoLifeNx
-        git clone https://github.com/filoper/NoLifeNx.git nlnx
-        cd nlnx
+        cd thirdparty/NoLifeNx/nlnx
         cmake -Bbuild -GNinja -DCMAKE_INSTALL_PREFIX=$INSTALL_LOCATION -DCMAKE_BUILD_TYPE=$BUILD_TYPE
         cmake --build build --config $BUILD_TYPE
         cmake --install build --config $BUILD_TYPE
 
     - name: Install Glfw
       run: brew install glfw
-
-    - name: Install Asio
-      run: |
-        cd thirdparty
-        git clone https://github.com/chriskohlhoff/asio.git
-
-    - name: Install Stb
-      run: |
-        cd thirdparty
-        git clone https://github.com/nothings/stb.git
 
     - name: Install GoogleTest
       run: |

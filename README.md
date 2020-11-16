@@ -27,17 +27,20 @@ Download and install the following:
 
 ### Setup the project
 
+If you are cloning:
 ```bash
-git clone https://github.com/filoper/ms-client.git
+git clone --recurse-submodules https://github.com/filoper/ms-client.git
 ```
 
-Finally, create a new folder called `thirdparty` inside `ms-client` folder.
+If you already cloned the project without the submodules you ran run:
+```bash
+git submodule update --init
+```
 
 ### Dependencies
 Download the required NX files from here [https://github.com/HeavenClient/HeavenClient/tree/master#required-files](https://github.com/HeavenClient/HeavenClient/tree/master#required-files)
 
 See install instructions below for your platform.
-> ***Note:*** *Place all folders created through `git clone` inside the `thirdparty` folder.*
 
 #### Windows
 Start Visual Studio 2019 x64 developer terminal.
@@ -60,38 +63,25 @@ Download BASS from https://www.un4seen.com/download.php?bass24 and place inside 
 ```
 
 ```bash
-mkdir NoLifeNx
-cd NoLifeNx
-git clone https://github.com/filoper/NoLifeNx.git nlnx
-cd nlnx
+Download https://github.com/ubawurinna/freetype-windows-binaries/archive/v2.10.2.zip 
+```
+
+```bash
+cd NoLifeNx/nlnx
 cmake -Bbuild -GNinja -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release
 ```
 
 ```bash
-Download https://github.com/ubawurinna/freetype-windows-binaries/archive/v2.10.2.zip 
-```
-
-```bash
-git clone https://github.com/Dav1dde/glad.git
 cd glad
 cmake -Bbuild -GNinja -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release
 ```
 
 ```bash
-git clone https://github.com/glfw/glfw 
 cd glfw
 cmake -Bbuild -GNinja -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release
-```
-
-```bash
-git clone https://github.com/chriskohlhoff/asio.git
-```
-
-```bash
-git clone https://github.com/nothings/stb.git
 ```
 
 #### Mac
@@ -100,22 +90,7 @@ Download BASS from https://www.un4seen.com and place inside `thirdparty`.
 ```
 
 ```bash
-git clone https://github.com/Dav1dde/glad.git
-cd glad
-cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release
-```
-
-```bash
 brew install lz4
-```
-
-```bash
-mkdir NoLifeNx
-cd NoLifeNx
-git clone https://github.com/filoper/NoLifeNx.git nlnx
-cd nlnx
-cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release
 ```
 
 ```bash
@@ -123,11 +98,15 @@ brew install glfw
 ```
 
 ```bash
-git clone https://github.com/chriskohlhoff/asio.git
+cd glad
+cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
 ```
 
 ```bash
-git clone https://github.com/nothings/stb.git
+cd NoLifeNx/nlnx
+cd nlnx
+cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release
 ```
 
 #### Linux
@@ -137,14 +116,6 @@ Download BASS from https://www.un4seen.com and place inside `thirdparty`.
 
 ```bash
 sudo apt-get install liblz4-dev
-```
-```bash
-mkdir NoLifeNx
-cd NoLifeNx
-git clone https://github.com/filoper/NoLifeNx.git nlnx
-cd nlnx
-cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release
 ```
 
 ```bash
@@ -156,11 +127,9 @@ sudo apt-get install libfreetype-dev
 ```
 
 ```bash
-git clone https://github.com/chriskohlhoff/asio.git
-```
-
-```bash
-git clone https://github.com/nothings/stb.git
+cd NoLifeNx/nlnx
+cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
 ```
 
 ## Build

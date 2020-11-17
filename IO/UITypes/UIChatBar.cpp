@@ -432,13 +432,14 @@ void UIChatBar::send_chatline(const std::string &line, LineType type) {
         default: color = Color::Name::WHITE; break;
     }
 
+    auto bounds = get_bounds(dimension_);
     row_texts_.emplace(std::piecewise_construct,
                        std::forward_as_tuple(row_max_),
                        std::forward_as_tuple(Text::Font::A11M,
                                              Text::Alignment::LEFT,
                                              color,
                                              line,
-                                             480));
+                                             bounds.width()));
 }
 
 void UIChatBar::display_message(Messages::Type line, UIChatBar::LineType type) {

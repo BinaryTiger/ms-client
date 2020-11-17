@@ -97,6 +97,7 @@ protected:
 
 private:
     void handlestring(const std::string &numstr);
+    void safeDeactivate();
 
     enum Buttons : int16_t { OK, CANCEL };
 

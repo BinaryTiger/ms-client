@@ -211,7 +211,8 @@ UIEnterNumber::UIEnterNumber(std::string message,
     numfield.set_enter_callback(
         [&](std::string numstr) { handlestring(std::move(numstr)); });
 
-    numfield.set_key_callback(KeyAction::Id::ESCAPE, [&]() { deactivate(); });
+    numfield.set_key_callback(KeyAction::Id::ESCAPE,
+                              [&]() { safeDeactivate(); });
 
     numfield.set_state(Textfield::State::FOCUSED);
 }
@@ -245,9 +246,8 @@ Cursor::State UIEnterNumber::send_cursor(bool clicked,
 void UIEnterNumber::send_key(int32_t keycode, bool pressed, bool escape) {
     if (keycode == KeyAction::Id::RETURN) {
         handlestring(numfield.get_text());
-        deactivate();
     } else if (escape) {
-        deactivate();
+        safeDeactivate();
     }
 }
 
@@ -258,10 +258,15 @@ UIElement::Type UIEnterNumber::get_type() const {
 Button::State UIEnterNumber::button_pressed(uint16_t buttonid) {
     switch (buttonid) {
         case Buttons::OK: handlestring(numfield.get_text()); break;
-        case Buttons::CANCEL: deactivate(); break;
+        case Buttons::CANCEL: safeDeactivate(); break;
     }
 
     return Button::State::NORMAL;
+}
+
+void UIEnterNumber::safeDeactivate() {
+    numfield.set_state(Textfield::State::DISABLED);
+    deactivate();
 }
 
 void UIEnterNumber::handlestring(const std::string &numstr) {
@@ -297,7 +302,7 @@ void UIEnterNumber::handlestring(const std::string &numstr) {
         return;
     }
     numhandler(num);
-    deactivate();
+    safeDeactivate();
 
     buttons_[Buttons::OK]->set_state(Button::State::NORMAL);
 }
